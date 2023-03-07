@@ -16,6 +16,7 @@ setuptools.setup(
     install_requires = ['tensorflow',
                        'opencv-python',
                        'scikit-image',
+                       'scipy',
                         'typeguard'],
     classifiers=[
         "Programming Language :: Python :: 3",
