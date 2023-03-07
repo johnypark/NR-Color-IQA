@@ -30,7 +30,7 @@ def get_brisque_colnames(list_names, colname_type = 'short'):
         outcome = brisque_listcomp(list_names, feature_names = brisque_features)  
 
     elif colname_type == 'short':
-        brisque_f_nums = ["f"+k for k in range(1, 19)]
+        brisque_f_nums = ["f"+ str(k) for k in range(1, 19)]
         outcome = brisque_listcomp(list_names, feature_names = brisque_f_nums)
 
     return outcome
