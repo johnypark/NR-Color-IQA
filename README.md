@@ -14,4 +14,11 @@ a = R − G (1)
 CIQI = c1 × CIQI_colorfulness + c2× CIQI_sharpness + c3 × CIQI_contrast (3)
 CIQI_colorfulness = (sqrt(stdev(alpha)^2+stdev(beta)^2) + 0.3*sqrt(mu(alpha)^2+mu(beta)^2)) / 85.59
 CIQI_sharpness = 1 − (1 − (tep_estimated − tep_sobel)/tep_sobel)**0.2
-CIQI_contrast = max(local_contrast = sigma(9:15)(Bond_i)/sigma(1:8)(Bond_i)
+CIQI_contrast = max(local_contrast = sigma(9:15)(Bond_i)/sigma(1:8)(Bond_i))
+
+tep_estimated: Number of edge pixels estimated
+tep_sobel: Number of edge pixels counted using Sobel operator
+Bond_i is the ith coefficient of the total 15 bands of 8×8 blocks of DCT coefficients. 
+c1, c2, c3 are weighted coefficient
+
+CQE_colorfulness = 0.02*log(stdev(alpha)^2/abs(mu(alpha))^0.2)*log(stdev(alpha)^2/abs(mu(alpha))^0.2)
