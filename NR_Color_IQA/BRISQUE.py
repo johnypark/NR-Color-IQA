@@ -10,6 +10,33 @@ import numpy as np
 import cv2
 import scipy as sp
 
+
+
+brisque_features = ['GGD_shape','GGD_var', # f1 -f2
+'AGGD_H_shape', 'AGGD_H_mean', 'AGGD_H_lvar', 'AGGD_H_rvar', #f3-f6
+'AGGD_V_shape', 'AGGD_V_mean', 'AGGD_V_lvar', 'AGGD_V_rvar', #f7-f10
+'AGGD_D1_shape', 'AGGD_D1_mean', 'AGGD_D1_lvar', 'AGGD_D1_rvar', #f11-f14
+'AGGD_D2_shape', 'AGGD_D2_mean', 'AGGD_D2_lvar', 'AGGD_D2_rvar'] #f15-f18
+
+def get_brisque_colnames(list_names, colname_type = 'short'):
+
+    def brisque_listcomp(list_names, feature_names):
+        colname =[]
+        for name in list_names:
+            colname += ["brisque_"+name+"_"+ ft_name for ft_name in feature_names]
+        return colname
+    
+    if colname_type == 'full':
+        outcome = brisque_listcomp(list_names, feature_names = brisque_features)  
+
+    elif colname_type == 'short':
+        brisque_f_nums = ["f"+k for k in range(1, 19)]
+        outcome = brisque_listcomp(list_names, feature_names = brisque_f_nums)
+
+    return outcome
+
+
+
 gamma_range = np.arange(0.2, 10, 0.001)
 a = scipy.special.gamma(2.0/gamma_range)
 a *= a
@@ -62,15 +89,6 @@ def aggd_features(imdata):
     return (alpha, N, bl, br, left_mean_sqrt, right_mean_sqrt)
 
 
-def ggd_features(imdata):
-    nr_gam = 1/prec_gammas
-    sigma_sq = np.var(imdata)
-    E = np.mean(np.abs(imdata))
-    rho = sigma_sq/E**2
-    pos = np.argmin(np.abs(nr_gam - rho))
-    return gamma_range[pos], sigma_sq
-
-
 def paired_product(new_im):
     shift1 = np.roll(new_im.copy(), 1, axis=1)
     shift2 = np.roll(new_im.copy(), 1, axis=0)
@@ -86,7 +104,7 @@ def paired_product(new_im):
 
 
 def calculate_mscn(dis_image):
-    dis_image = dis_image.astype(np.float32)  # 类型转换十分重要
+    dis_image = dis_image.astype(np.float32) 
     ux = cv2.GaussianBlur(dis_image, (7, 7), 7/6)
     ux_sq = ux*ux
     sigma = np.sqrt(np.abs(cv2.GaussianBlur(dis_image**2, (7, 7), 7/6)-ux_sq))
