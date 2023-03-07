@@ -15,7 +15,7 @@ import math
 import pandas as pd
 import time
 
-def nmetrics(a):
+def get_ucique(a):
     print('Calcuating UCIQE....\n')
     rgb = a
     lab = color.rgb2lab(a)
@@ -74,7 +74,7 @@ def main():
                 print('Reading file from PATH:{}'.format(fPATH))
                 corrected = io.imread(fPATH)
 
-                uciqe = nmetrics(corrected)
+                uciqe = get_ucique(corrected)
 
                 UCIQUE = UCIQUE + [uciqe]
                 fileName = fileName + [file_name]
