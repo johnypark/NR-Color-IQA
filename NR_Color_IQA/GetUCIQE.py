@@ -15,7 +15,7 @@ import math
 import pandas as pd
 import time
 
-def get_ucique(a):
+def get_uciqe(a):
     print('Calcuating UCIQE....\n')
     rgb = a
     lab = color.rgb2lab(a)
@@ -63,7 +63,7 @@ def main():
         sumuiqm, sumuciqe = 0.,0.
         fileName =[]
         UIQM = []
-        UCIQUE = []
+        UCIQE = []
         N=0
         for file_name in result_dirs:
             if '.jpg' in file_name:
@@ -74,14 +74,14 @@ def main():
                 print('Reading file from PATH:{}'.format(fPATH))
                 corrected = io.imread(fPATH)
 
-                uciqe = get_ucique(corrected)
+                uciqe = get_uciqe(corrected)
 
-                UCIQUE = UCIQUE + [uciqe]
-                fileName = fileName + [file_name]
+                UCIQE += [uciqe]
+                fileName += [file_name]
                 end = time.time()
                 print("Time to run: {}".format((end - start)))
                 
         pd.DataFrame.from_dict({'file_name':fileName, #'uiqm':UIQM, 
-                                'ucique':UCIQUE, 'collectionCode':result_path}).to_csv("herb2022_test_ui_metrics_"+result_path+".tsv", sep="\t")
+                                'uciqe':UCIQE, 'collectionCode':result_path}).to_csv("herb2022_test_ui_metrics_"+result_path+".tsv", sep="\t")
 if __name__ == '__main__':
     main()
