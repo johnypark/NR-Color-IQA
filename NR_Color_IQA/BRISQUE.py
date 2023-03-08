@@ -18,7 +18,7 @@ brisque_features = ['GGD_shape','GGD_var', # f1 -f2
 'AGGD_D1_shape', 'AGGD_D1_mean', 'AGGD_D1_lvar', 'AGGD_D1_rvar', #f11-f14
 'AGGD_D2_shape', 'AGGD_D2_mean', 'AGGD_D2_lvar', 'AGGD_D2_rvar'] #f15-f18
 
-def get_brisque_colnames(list_names, colname_type = 'short'):
+def get_brisque_colnames(list_names, colname_type = 'full'):
 
     def brisque_listcomp(list_names, feature_names):
         colname =[]
@@ -26,13 +26,19 @@ def get_brisque_colnames(list_names, colname_type = 'short'):
             colname += [name+"_"+ ft_name for ft_name in feature_names]
         return colname
     
-    if colname_type == 'full':
-        outcome = brisque_listcomp(list_names, feature_names = brisque_features)  
+    if len(list_names) == 1:
+        brisque_f_nums = ["f"+ str(k) for k in range(1, 37)]
+        outcome = [list_names[0]+"_"+ft_name for ft_name in brisque_f_nums]
 
-    elif colname_type == 'short':
-        brisque_f_nums = ["f"+ str(k) for k in range(1, 19)]
-        outcome = brisque_listcomp(list_names, feature_names = brisque_f_nums)
+    else:    
+        if colname_type == 'full':
+            outcome = brisque_listcomp(list_names, feature_names = brisque_features)  
 
+        elif colname_type == 'short':
+            brisque_f_nums = ["f"+ str(k) for k in range(1, 19)]
+            outcome = brisque_listcomp(list_names, feature_names = brisque_f_nums)
+
+    
     return outcome
 
 
