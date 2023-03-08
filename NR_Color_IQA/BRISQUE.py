@@ -23,7 +23,7 @@ def get_brisque_colnames(list_names, colname_type = 'short'):
     def brisque_listcomp(list_names, feature_names):
         colname =[]
         for name in list_names:
-            colname += ["brisque_"+name+"_"+ ft_name for ft_name in feature_names]
+            colname += [name+"_"+ ft_name for ft_name in feature_names]
         return colname
     
     if colname_type == 'full':
