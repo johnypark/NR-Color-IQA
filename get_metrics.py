@@ -9,12 +9,11 @@ import glob
 import NR_Color_IQA as iqa
 import numpy as np
 
-
-QICI_colorful = []
-BRISQUE = []
-UCIQE = []
-img_filename = []
 glob_PATH = sys.argv[1]
+try:
+    out_fileName = sys.argv[2]
+except:
+    out_fileName = 'get_metrics_out'
 RESIZE_RESOL = 512
 
 def main():
@@ -23,6 +22,8 @@ def main():
     BRISQUE = []
     UCIQE = []
     img_fileName = []
+    collectionCode =[]
+
     print(glob_PATH)
     ls_all_files = glob.glob(glob_PATH+"*/*.jpg")
     print(ls_all_files)
@@ -35,6 +36,7 @@ def main():
         #print(tens)
         tens = tf.image.resize(tens, (RESIZE_RESOL, RESIZE_RESOL))
         img_fileName += [file_name.split("/")[-1]]
+        collectionCode +=[file_name.split("/")[-2]]
         QICI_colorful += [iqa.get_colorfulness()(tens).numpy()]
         BRISQUE += [iqa.brisque(tens.numpy()).tolist()] 
         UCIQE += [iqa.get_uciqe(tens.numpy())]
@@ -42,9 +44,9 @@ def main():
         print("Time to run: {}".format((end - start)))
     
     df_part1 = pd.DataFrame({'file_name':img_fileName, 'QICI_colorful': QICI_colorful, 
-              'UCIQE':UCIQE})
+              'UCIQE':UCIQE, 'collectionCode': collectionCode})
     df_part2 = pd.DataFrame(BRISQUE, columns = iqa.get_brisque_colnames(['brisque']))
-    pd.concat([df_part1, df_part2], axis = 1).to_csv('get_metrics_out.csv')
+    pd.concat([df_part1, df_part2], axis = 1).to_csv(out_fileName+'.csv')
 
 if __name__ == '__main__':
     main()
