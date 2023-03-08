@@ -8,6 +8,17 @@
 4. PIQE
 5. CRME: [No reference color image contrast and quality measures (IEEE Transactions on Consumer Electronics)](10.1109/TCE.2013.6626251)
 6. CIQI (Color Image Quality Index): [Color image quality measures and retrieval](https://digitalcommons.njit.edu/dissertations/745/)
+7. [A new image quality measure for assessment of histogram equalization-based contrast enhancement techniques](https://www.sciencedirect.com/science/article/abs/pii/S1051200412000747)
+8. [Evaluation of color differences in natural scene color images](https://www.sciencedirect.com/science/article/pii/S0923596518301863)
+9. [No-reference color image quality assessment: from entropy to perceptual quality](https://jivp-eurasipjournals.springeropen.com/articles/10.1186/s13640-019-0479-7)
+
+## DataSets
+
+KonIQ-10K: An Ecologically Valid Database of Deep Learning of Blind Image Quality Assessment (IEEE Transactions on Image Processing)
+KANDID-10K: A Large-scale Artificially Distorted IQA Database  ( QoMEX IEEE )
+KANDIS-700K dataset
+
+
 
 a = R − G (1)
 β = 0.5 × (R + G) − B (2)
