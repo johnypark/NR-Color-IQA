@@ -9,14 +9,7 @@ import glob
 import NR_Color_IQA as iqa
 import numpy as np
 
-glob_PATH = sys.argv[1]
-try:
-    out_fileName = sys.argv[2]
-except:
-    out_fileName = 'get_metrics_out'
-RESIZE_RESOL = 512
-
-def main():
+def main(glob_PATH, out_fileName, RESIZE_RESOL = 512):
     
     QICI_colorful = []
     BRISQUE = []
@@ -27,6 +20,7 @@ def main():
     print(glob_PATH)
     ls_all_files = glob.glob(glob_PATH+"*/*.jpg")
     print(ls_all_files)
+    print(out_fileName)
     for file_name in ls_all_files:
 
         start = time.time()
@@ -46,7 +40,26 @@ def main():
     df_part1 = pd.DataFrame({'file_name':img_fileName, 'QICI_colorful': QICI_colorful, 
               'UCIQE':UCIQE, 'collectionCode': collectionCode})
     df_part2 = pd.DataFrame(BRISQUE, columns = iqa.get_brisque_colnames(['brisque']))
-    pd.concat([df_part1, df_part2], axis = 1).to_csv(out_fileName+'.csv')
+    df_out = pd.concat([df_part1, df_part2], axis = 1)
+    
+    try:
+        df_out.to_csv(out_fileName+'.csv')
+    except:
+        satisfy = True
+        out_fileName = out_fileName+"_1"                
+        while satisfy:
+                try:
+                    df_out.to_csv(out_fileName)
+                    satisfy = False
+                except:
+                    out_fileName = out_fileName+"_1"                                    
 
 if __name__ == '__main__':
-    main()
+    
+    glob_PATH = sys.argv[1]
+    try:
+        out_fileName = sys.argv[2]
+    except:
+        out_fileName = 'get_metrics_out'
+    print(out_fileName)
+    main(glob_PATH, out_fileName)
